@@ -1,8 +1,10 @@
+'use client'
+
 import { Suspense, use } from 'react'
 import { addUser } from '../util/addUser'
 
-function User() {
-  const user = use(addUser())
+function User({ addUserPromise }: { addUserPromise: ReturnType<typeof addUser> }) {
+  const user = use(addUserPromise)
   return (
     <div className="mt-4 w-80 rounded-lg border bg-white p-6 shadow-lg">
       <h2 className="mb-4 text-2xl font-bold text-gray-800">
@@ -17,9 +19,10 @@ function User() {
 }
 
 export default function Page() {
+  const addUserPromise = addUser()
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <User />
+      <User addUserPromise={addUserPromise} />
     </Suspense>
   )
 }
