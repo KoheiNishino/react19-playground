@@ -1,16 +1,16 @@
-import Link from 'next/link';
-import { cn } from './util/cn';
+import Link from 'next/link'
+import { cn } from './util/cn'
 
-const LINKS = ['/use', '/useOptimistic'] as const;
+const LINKS = ['/use', '/useOptimistic'] as const
 
 export default function Page() {
   return (
     <main>
       <ul className={cn('list-disc p-8')}>
-        {LINKS.map((link) => (
+        {LINKS.map(link => (
           <li key={link}>
             <Link
-              className={cn('underline text-blue-600 hover:text-blue-800')}
+              className={cn('text-blue-600 underline hover:text-blue-800')}
               href={link}
             >
               {link}
@@ -19,5 +19,5 @@ export default function Page() {
         ))}
       </ul>
     </main>
-  );
+  )
 }
