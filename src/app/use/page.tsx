@@ -1,7 +1,6 @@
 import type { JSX } from 'react'
 import Link from 'next/link'
 import { Suspense, use } from 'react'
-import { sleep } from '../util/sleep'
 
 interface Comment {
   id: number
@@ -9,7 +8,7 @@ interface Comment {
 }
 
 async function fetchComments(): Promise<{ comments: Comment[] }> {
-  await sleep(1000)
+  await new Promise(resolve => setTimeout(resolve, 500))
   const response = await fetch('https://dummyjson.com/comments')
   return response.json()
 }

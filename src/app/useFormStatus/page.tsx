@@ -3,11 +3,10 @@
 import Link from 'next/link'
 import { useFormStatus } from 'react-dom'
 import { cn } from '../util/cn'
-import { sleep } from '../util/sleep'
 
 async function action(formData: FormData) {
   const name = formData.get('name')
-  await sleep(1000)
+  await new Promise(resolve => setTimeout(resolve, 500))
   // eslint-disable-next-line no-console
   console.log('submitted:', name)
 }
@@ -18,16 +17,9 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className={cn(
-        'h-12 w-16 rounded-md font-medium',
-        'bg-blue-500 text-white',
-        'hover:bg-blue-600',
-        'focus:outline-none focus:ring-2 focus:ring-blue-500',
-        'disabled:bg-gray-100 disabled:text-gray-500',
-        'disabled:cursor-not-allowed disabled:border-gray-200',
-      )}
+      className="bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
     >
-      送信
+      送信する
     </button>
   )
 }

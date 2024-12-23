@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { useOptimistic, useState } from 'react'
 import { cn } from '../util/cn'
-import { sleep } from '../util/sleep'
 
 export default function Page() {
   const [baseName, setBaseName] = useState('currentName')
@@ -12,7 +11,7 @@ export default function Page() {
   const action = async (formData: FormData) => {
     const newName = formData.get('name') as string
     setOptimisticName(newName)
-    await sleep(1000)
+    await new Promise(resolve => setTimeout(resolve, 500))
     setBaseName(newName)
     // eslint-disable-next-line no-console
     console.log(`${newName}に更新しました。`)

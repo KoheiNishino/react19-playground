@@ -2,25 +2,10 @@
 
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
+import { addUser } from '../util/addUser'
 import { cn } from '../util/cn'
-import { sleep } from '../util/sleep'
 
 interface User { firstName: string, lastName: string, age: number }
-
-async function addUser(): Promise<User> {
-  await sleep(500)
-  const res = await fetch('https://dummyjson.com/users/add', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      firstName: 'Muhammad',
-      lastName: 'Ovi',
-      age: 250,
-    }),
-  })
-  const json = await res.json()
-  return json
-}
 
 export default function Page() {
   const [addedUser, setAddedUser] = useState<User | null>(null)
