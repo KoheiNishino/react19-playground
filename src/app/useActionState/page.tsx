@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState, useTransition } from 'react'
+import { useActionState } from 'react'
 import { addUser } from '../util/addUser'
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
       <button
         type="submit"
         disabled={isPending}
-        className="bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+        className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
       >
         ユーザーを追加する
       </button>

@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <main>
+        <main className="p-2">
           <Top />
           {children}
         </main>
