@@ -1,8 +1,6 @@
 'use client'
 
-import Link from 'next/link'
 import { useOptimistic, useState } from 'react'
-import { cn } from '../util/cn'
 
 export default function Page() {
   const [baseName, setBaseName] = useState('currentName')
@@ -18,30 +16,20 @@ export default function Page() {
   }
 
   return (
-    <main>
-      <Link className={cn('text-blue-600 underline hover:text-blue-800')} href="/">
-        Top
-      </Link>
-      <form action={action}>
-        <p>
-          Your name is:
-          {optimisticName}
-        </p>
-        <p>
-          <label>Change Name: </label>
-          <input
-            className={cn(
-              'rounded-md border',
-              'focus:outline-none focus:ring-2 focus:ring-blue-500',
-              'disabled:bg-gray-100 disabled:text-gray-500',
-              'disabled:cursor-not-allowed disabled:border-gray-200',
-            )}
-            type="text"
-            name="name"
-            disabled={baseName !== optimisticName}
-          />
-        </p>
-      </form>
-    </main>
+    <form action={action}>
+      <p>
+        Your name is:
+        {optimisticName}
+      </p>
+      <p>
+        <label>Change Name: </label>
+        <input
+          className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+          type="text"
+          name="name"
+          disabled={baseName !== optimisticName}
+        />
+      </p>
+    </form>
   )
 }

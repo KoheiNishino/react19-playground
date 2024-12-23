@@ -1,5 +1,4 @@
 import type { JSX } from 'react'
-import Link from 'next/link'
 import { Suspense, use } from 'react'
 
 interface Comment {
@@ -26,13 +25,8 @@ function CommentList(): JSX.Element {
 
 export default function Page() {
   return (
-    <main>
-      <Link className="text-blue-600 underline hover:text-blue-800" href="/">
-        Top
-      </Link>
-      <Suspense fallback={<div>Loading...</div>}>
-        <CommentList />
-      </Suspense>
-    </main>
+    <Suspense fallback={<div>Loading...</div>}>
+      <CommentList />
+    </Suspense>
   )
 }

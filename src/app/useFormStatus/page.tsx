@@ -1,8 +1,6 @@
 'use client'
 
-import Link from 'next/link'
 import { useFormStatus } from 'react-dom'
-import { cn } from '../util/cn'
 
 async function action(formData: FormData) {
   const name = formData.get('name')
@@ -26,21 +24,13 @@ function SubmitButton() {
 
 export default function Page() {
   return (
-    <main>
-      <Link className={cn('text-blue-600 underline hover:text-blue-800')} href="/">
-        Top
-      </Link>
-      <form action={action} className={cn('flex gap-2')}>
-        <input
-          className={cn(
-            'h-12 rounded-md border',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500',
-          )}
-          type="text"
-          name="name"
-        />
-        <SubmitButton />
-      </form>
-    </main>
+    <form action={action} className="flex gap-2">
+      <input
+        className="h-12 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-500"
+        type="text"
+        name="name"
+      />
+      <SubmitButton />
+    </form>
   )
 }

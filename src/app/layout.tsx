@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Top } from './Top'
 import './css/globals.css'
 
 export default function RootLayout({
@@ -6,7 +7,12 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <main>
+          <Top />
+          {children}
+        </main>
+      </body>
     </html>
   )
 }
