@@ -1,19 +1,46 @@
+import { promises } from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
 import Link from 'next/link'
 import { cn } from './util/cn'
 
-const LINKS = ['/use', '/useOptimistic'] as const
+async function getPageDirectories(): Promise<string[]> {
+  const pageDirectories: string[] = []
+  const absoluteRootDir = path.join(process.cwd(), 'src/app')
 
-export default function Page() {
+  async function searchPages(dir: string) {
+    const items = await promises.readdir(dir)
+
+    if (items.includes('page.tsx') && dir !== absoluteRootDir) {
+      pageDirectories.push(path.relative(absoluteRootDir, dir))
+    }
+
+    await Promise.all(
+      items.map(async (item) => {
+        const fullPath = path.join(dir, item)
+        const stats = await promises.stat(fullPath)
+        if (stats.isDirectory()) {
+          await searchPages(fullPath)
+        }
+      }),
+    )
+  }
+
+  await searchPages(absoluteRootDir)
+  return pageDirectories
+}
+
+export default async function Page() {
   return (
     <main>
       <ul className={cn('list-disc p-8')}>
-        {LINKS.map(link => (
-          <li key={link}>
+        {(await getPageDirectories()).map(dir => (
+          <li key={dir}>
             <Link
               className={cn('text-blue-600 underline hover:text-blue-800')}
-              href={link}
+              href={dir}
             >
-              {link}
+              {dir}
             </Link>
           </li>
         ))}
