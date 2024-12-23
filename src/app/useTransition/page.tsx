@@ -1,67 +1,80 @@
 'use client'
 
-import { useState } from 'react'
+import Link from 'next/link'
+import { useState, useTransition } from 'react'
+import { cn } from '../util/cn'
 import { sleep } from '../util/sleep'
 
-interface Product { title: string, price: number }
+interface User { firstName: string, lastName: string, age: number }
 
-async function getRandomProduct(): Promise<Product> {
+async function addUser(): Promise<User> {
   await sleep(500)
-  const res = await fetch(
-    `https://dummyjson.com/products/${Math.floor(Math.random() * 100) + 1}`,
-  )
+  const res = await fetch('https://dummyjson.com/users/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      firstName: 'Muhammad',
+      lastName: 'Ovi',
+      age: 250,
+    }),
+  })
   const json = await res.json()
   return json
 }
 
 export default function Page() {
-  const [product, setProduct] = useState<Product | null>(null)
+  const [addedUser, setAddedUser] = useState<User | null>(null)
+  // const [isPending, setIsPending] = useState(false)
 
-  const [isPending, setIsPending] = useState(false)
-  const handleClick = async () => {
-    setProduct(null)
-    setIsPending(true)
-    const product = await getRandomProduct()
-    setProduct(product)
-    setIsPending(false)
-  }
-
-  // const [isPending, startTransition] = useTransition()
-  // const handleClick = () => {
-  //   setProduct(null)
-  //   startTransition(async () => {
-  //     const product = await getRandomProduct()
-  //     setProduct(product)
-  //   })
+  // const handleClick = async () => {
+  //   setAddedUser(null)
+  //   setIsPending(true)
+  //   const user = await addUser()
+  //   setAddedUser(user)
+  //   setIsPending(false)
   // }
 
+  const [isPending, startTransition] = useTransition()
+  const handleClick = () => {
+    setAddedUser(null)
+    startTransition(async () => {
+      const user = await addUser()
+      setAddedUser(user)
+    })
+  }
+
   return (
-    <div className="p-4">
-      <button
-        type="button"
-        onClick={handleClick}
-        disabled={isPending}
-        className="bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-      >
-        商品を取得する
-      </button>
-      {product
-        ? (
-            <div className="mt-4 w-80 rounded-lg border bg-white p-6 shadow-lg">
-              <h2 className="mb-4 text-2xl font-bold text-gray-800">
-                {product.title}
-              </h2>
-              <p className="text-lg text-gray-600">
-                価格: $
-                {product.price}
-              </p>
-            </div>
-          )
-        : isPending
+    <main>
+      <Link className={cn('text-blue-600 underline hover:text-blue-800')} href="/">
+        Top
+      </Link>
+      <div className="p-4">
+        <button
+          type="button"
+          onClick={handleClick}
+          disabled={isPending}
+          className="bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+        >
+          ユーザーを追加する
+        </button>
+        {addedUser
           ? (
-              <p className="mt-8 text-lg text-gray-500">Loading...</p>
+              <div className="mt-4 w-80 rounded-lg border bg-white p-6 shadow-lg">
+                <h2 className="mb-4 text-2xl font-bold text-gray-800">
+                  {`${addedUser.firstName} ${addedUser.lastName}`}
+                </h2>
+                <p className="text-lg text-gray-600">
+                  年齢:
+                  {addedUser.age}
+                </p>
+              </div>
             )
-          : null}
-    </div>
+          : isPending
+            ? (
+                <p className="mt-8 text-lg text-gray-500">ユーザーを追加しています...</p>
+              )
+            : null}
+      </div>
+    </main>
   )
 }
