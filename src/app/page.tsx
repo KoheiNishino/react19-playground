@@ -33,6 +33,7 @@ async function getPageDirectories(): Promise<string[]> {
 export default async function Page() {
   return (
     <main>
+      <h2 className={cn('text-lg font-bold')}>react19-playground</h2>
       <ul className={cn('list-disc p-8')}>
         {(await getPageDirectories()).map(dir => (
           <li key={dir}>
