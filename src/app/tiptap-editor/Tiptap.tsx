@@ -117,6 +117,11 @@ export default function Tiptap() {
   return (
     <EditorProvider
       content="<p>Hello World! 🌎️</p>"
+      editorProps={{
+        attributes: {
+          class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+        },
+      }}
       extensions={[StarterKit.configure({
         codeBlock: false,
         hardBreak: false,
