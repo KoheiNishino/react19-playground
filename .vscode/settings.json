@@ -52,5 +52,7 @@
   "editor.quickSuggestions": { "strings": true },
   "css.validate": false,
   "postcss.validate": false,
-  "typescript.tsdk": "./node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  // ref. https://tiptap.dev/docs/editor/getting-started/style-editor#intellisense
+  "tailwindCSS.experimental.classRegex": ["class:\\s*?[\"'`]([^\"'`]*).*?,"]
 }

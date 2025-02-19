@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
     "clsx": "^2.1.1",
     "next": "15.1.5",
     "react": "^19.0.0",
