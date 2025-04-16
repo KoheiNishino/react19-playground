@@ -1,21 +1,39 @@
 'use client'
 
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
+function Product() {
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ['product'],
+    queryFn: async () => {
+      const res = await fetch('https://dummyjson.com/products/1')
+      return res.json()
+    },
+  })
+
+  if (isPending) {
+    return (
+      <span>Loading...</span>
+    )
+  }
+
+  if (isError) {
+    return (
+      <span>
+        Error:
+        {error.message}
+      </span>
+    )
+  }
+  return <div>{JSON.stringify(data)}</div>
+}
 
 export default function App() {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    const getProduct = async () => {
-      const res = await axios.get('https://dummyjson.com/products/1')
-      setData(await res.data)
-    }
-
-    getProduct()
-  }, [])
-
   return (
-    <div>{JSON.stringify(data)}</div>
+    <QueryClientProvider client={queryClient}>
+      <Product />
+    </QueryClientProvider>
   )
 }
