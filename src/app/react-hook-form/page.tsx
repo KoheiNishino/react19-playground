@@ -6,6 +6,7 @@ interface Form {
   firstName: string
   lastName: string
   email: string
+  agree: boolean[]
 }
 
 export default function App() {
@@ -61,6 +62,32 @@ export default function App() {
         />
         {errors.email && (
           <span className="mt-1 text-sm text-red-600">{errors.email.message}</span>
+        )}
+      </label>
+      <label className="block">
+        <span className="block text-sm font-medium text-gray-700">同意事項</span>
+        <div className="mt-1 space-y-2">
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              {...register('agree.0', {
+                required: '利用規約に同意する必要があります',
+              })}
+            />
+            <span className="text-sm text-gray-700">利用規約に同意します</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              {...register('agree.1')}
+            />
+            <span className="text-sm text-gray-700">ニュースレターを受け取る</span>
+          </div>
+        </div>
+        {errors.agree?.[0] && (
+          <span className="mt-1 text-sm text-red-600">{errors.agree[0].message}</span>
         )}
       </label>
       <button
