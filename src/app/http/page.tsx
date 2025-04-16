@@ -1,25 +1,22 @@
 'use client'
 
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import useSWR from 'swr'
 
-const queryClient = new QueryClient()
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
-function Product() {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['product'],
-    queryFn: async () => {
-      const res = await fetch('https://dummyjson.com/products/1')
-      return res.json()
-    },
-  })
+export default function App() {
+  const { data, error, isLoading } = useSWR(
+    'https://dummyjson.com/products/1',
+    fetcher,
+  )
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <span>Loading...</span>
     )
   }
 
-  if (isError) {
+  if (error) {
     return (
       <span>
         Error:
@@ -27,13 +24,6 @@ function Product() {
       </span>
     )
   }
-  return <div>{JSON.stringify(data)}</div>
-}
 
-export default function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Product />
-    </QueryClientProvider>
-  )
+  return <div>{JSON.stringify(data)}</div>
 }
