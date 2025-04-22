@@ -2,7 +2,8 @@ import { Suspense } from 'react'
 import { Product } from './product'
 
 async function fetchProduct() {
-  return (await fetch('https://dummyjson.com/products/1')).json()
+  const res = await fetch('https://dummyjson.com/products/1')
+  return res.json()
 }
 
 export default function App() {
