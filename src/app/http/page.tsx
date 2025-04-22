@@ -1,29 +1,15 @@
-'use client'
+import { Suspense } from 'react'
+import { Product } from './product'
 
-import useSWR from 'swr'
-
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+async function fetchProduct() {
+  return (await fetch('https://dummyjson.com/products/1')).json()
+}
 
 export default function App() {
-  const { data, error, isLoading } = useSWR(
-    'https://dummyjson.com/products/1',
-    fetcher,
+  const productPromise = fetchProduct()
+  return (
+    <Suspense fallback={<span>Loading...</span>}>
+      <Product productPromise={productPromise} />
+    </Suspense>
   )
-
-  if (isLoading) {
-    return (
-      <span>Loading...</span>
-    )
-  }
-
-  if (error) {
-    return (
-      <span>
-        Error:
-        {error.message}
-      </span>
-    )
-  }
-
-  return <div>{JSON.stringify(data)}</div>
 }
